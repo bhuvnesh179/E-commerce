@@ -1,3 +1,13 @@
+## Frontend Url
+```
+ https://e-commerce-two-virid.vercel.app/
+```
+
+## Backend Url
+```
+ https://e-commerce-79ve.onrender.com
+```
+
 ## Setting Up the Project Locally
 
 To set up the project locally, follow these steps:
