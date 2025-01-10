@@ -22,7 +22,8 @@ const signinSchema = zod.object({
     password: zod.string(),
 })
 
-const productSchmea = zod.object({
+const productSchema = zod.object({
+    id: zod.string(),
     name: zod.string(),
     price: zod.number(),
     description: zod.string(),
@@ -106,20 +107,23 @@ router.post("/signin", async (req, res) => {
 })
 
 
-router.post("/addProduct", authMiddleware, async(req, res) => {
+router.post("/addProduct",authMiddleware, async(req, res) => {
     try{
-        const response = productSchmea.safeParse(req.body);
+        const response = productSchema.safeParse(req.body);
         if(!response.success){
             return res.status(400).json({
                 message: "Invalid Inputs"
             })
         }
+        console.log(req.body)
         const product = await Products.create(req.body);
+        console.log(product)
         res.json({
             message: "Product added successfully",
             product: product
         })
     }catch(error){
+        console.log(error)
         res.status(500).json({
             message: "Internal Server Error"
         })

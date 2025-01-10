@@ -52,6 +52,11 @@ const adminSchema = new mongoose.Schema({
 });
 
 const productSchema = new mongoose.Schema({
+    id: { 
+        type: String, 
+        unique: true, 
+        required: true 
+    },
     name: {
         type: String,
         required: true,

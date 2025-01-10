@@ -1,0 +1,1 @@
+export const BACKEND_URL= "https://e-commerce-79ve.onrender.com"
