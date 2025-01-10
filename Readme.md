@@ -51,3 +51,10 @@ To set up the project locally, follow these steps:
     ```bash
     npm start
     ```
+
+
+### Admin credentials
+```
+Email: - rishank@gmail.com
+Password: - rishank
+```   
