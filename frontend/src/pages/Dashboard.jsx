@@ -11,7 +11,7 @@ export const Dashboard = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await axios.get(`http://localhost:8001/api/v1/admin/products`, {
+                const response = await axios.get(`${BACKEND_URL}/api/v1/admin/products`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("token")}`,
                     },

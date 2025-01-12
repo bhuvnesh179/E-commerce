@@ -8,7 +8,7 @@ const naviagte = useNavigate();
     
     async function deleteHandler(){
         try{
-            const response = await axios.delete(`http://localhost:8001/api/v1/admin/deleteProduct/${product.id}`, {
+            const response = await axios.delete(`${BACKEND_URL}/api/v1/admin/deleteProduct/${product.id}`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`
                 }

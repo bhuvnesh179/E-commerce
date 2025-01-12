@@ -19,7 +19,7 @@ export const CreateProduct = () => {
     async function handler() {
         try {
             console.log({id, name, price, description, category, image});
-            const response = await axios.post(`http://localhost:8001/api/v1/admin/addProduct`, {
+            const response = await axios.post(`${BACKEND_URL}/api/v1/admin/addProduct`, {
                 id:id,
                 name:name,
                 price:parseFloat(price),

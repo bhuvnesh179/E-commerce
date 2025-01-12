@@ -2,6 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Spinner } from "./Spinner";
 import { useState } from "react";
 import axios from "axios";
+import { BACKEND_URL } from "../../config";
 
 export const UpdateProduct = () => {
     const navigate = useNavigate();
@@ -16,7 +17,7 @@ export const UpdateProduct = () => {
     async function handler() {
         console.log(`${id}`);
         try {
-            const response = await axios.put(`http://localhost:8001/api/v1/admin/updateProduct/${id}`, {
+            const response = await axios.put(`${BACKEND_URL}/api/v1/admin/updateProduct/${id}`, {
                 id:id,
                 name: name,
                 price: parseFloat(price),

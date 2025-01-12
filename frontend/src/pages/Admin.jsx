@@ -17,7 +17,7 @@ export const Admin = () => {
     async function handler() {
 
         try {
-            const response = await axios.post(`http://localhost:8001/api/v1/admin/signin`, {
+            const response = await axios.post(`${BACKEND_URL}/api/v1/admin/signin`, {
                 email: email,
                 password: password
             });
