@@ -17,7 +17,7 @@ export const Signin = () => {
                 password: password
             });
             localStorage.setItem("token", response.data.token);
-            navigate("/products");
+            navigate("/user");
             console.log(response.data);
         } catch (error) {
             console.log(error);

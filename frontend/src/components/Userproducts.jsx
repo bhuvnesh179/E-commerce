@@ -1,8 +1,8 @@
-export const Products = ({product}) => {
-    return <div className="h-80 w-80 border-2 border-black ml-4 mt-4">
+export const Userproducts = ({product}) => {
+    return <div  className="h-90 w-80 border-2 border-black ml-4 mt-4 cursor-pointer">
             
     <div className="flex justify-center">
-        <img src={product.image} alt="" />
+        <img src={product.image} alt="img" className="object-cover h-48 w-48" />
     </div>
     <div className="flex flex-col justify-center items-center">
          <div>Product Name: {product.name}</div>

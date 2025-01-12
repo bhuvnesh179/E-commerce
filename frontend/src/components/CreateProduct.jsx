@@ -7,7 +7,7 @@ import { Spinner } from "./Spinner";
 
 export const CreateProduct = () => {
     const navigate = useNavigate();
-    const[id, setId] = useState("");
+    const [id, setId] = useState("");
     const [name, setName] = useState("");
     const [price, setPrice] = useState(0);
     const [category, setCategory] = useState("");
@@ -18,24 +18,26 @@ export const CreateProduct = () => {
 
     async function handler() {
         try {
-            const response = await axios.post(`${BACKEND_URL}api/v1/admin/addProduct`, {
-                id,
-                name,
-                price,
-                description,
-                category,
-                image,
+            console.log({id, name, price, description, category, image});
+            const response = await axios.post(`http://localhost:8001/api/v1/admin/addProduct`, {
+                id:id,
+                name:name,
+                price:parseFloat(price),
+                description:description,
+                category:category,
+                image:image,
             }, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`,
                 },
             });
+            
             alert("Product added successfully");
             navigate("/dashboard");
             console.log("Response:", response.data);
         } catch (error) {
             console.error("Error adding product:", error.response ? error.response.data : error.message);
-            alert("Failed to add product. Check console for details.");
+            alert("Chanege the ID, it should be unique");
         }
     }
     
@@ -69,7 +71,7 @@ export const CreateProduct = () => {
              </label>
 
         <input onChange={(e) => {
-            setPrice(e.target.value ? parseFloat(e.target.value) : 0);
+            setPrice(e.target.value);
         }} type="number" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-64 p-2.5 " placeholder="price" required />
 
         </div>

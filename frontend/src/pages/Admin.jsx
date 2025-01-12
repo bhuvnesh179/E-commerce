@@ -8,14 +8,16 @@ import { Spinner } from "../components/Spinner";
 
 export const Admin = () => {
     const navigate = useNavigate();
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
 
 
     async function handler() {
+
         try {
-            const response = await axios.post(`${BACKEND_URL}/api/v1/admin/signin`, {
+            const response = await axios.post(`http://localhost:8001/api/v1/admin/signin`, {
                 email: email,
                 password: password
             });

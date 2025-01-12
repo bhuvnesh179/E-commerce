@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { BACKEND_URL } from "../../config";
 import { Spinner } from "../components/Spinner";
@@ -21,7 +21,7 @@ export const Signup = () => {
                 password: password
             });
            localStorage.setItem("token", response.data.token);
-           navigate("/products");
+           navigate("/user");
         } catch (error) {
             console.log(error);
         }
@@ -77,6 +77,7 @@ export const Signup = () => {
             {loading ? <Spinner/> : "Signup"}
             </button>
             </div>
+            
 
         </div>
         <div className="flex flex-col items-center justify-center h-screen bg-gray-800 text-white font-extrabold text-2xl	">

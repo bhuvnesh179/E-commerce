@@ -7,6 +7,7 @@ import { Admin } from "./pages/Admin";
 import { Dashboard } from "./pages/Dashboard";
 import { CreateProduct } from "./components/CreateProduct";
 import { UserView } from "./components/UserView";
+import { UpdateProduct } from "./components/UpdateProduct";
 
 function App() {
   return (  
@@ -15,12 +16,13 @@ function App() {
       <Suspense fallback={<div>Loading....</div>}>
         <Routes>
           <Route path="/"   element={<LandingPage/>} />
-          <Route path="/signup"  element={<Signup/>} />
-          <Route path="/signin"  element={<Signin/>} />
           <Route path="/admin"   element={<Admin/>}/>
           <Route path="/dashboard"   element={<Dashboard/>}/>
           <Route path="/createproduct"   element={<CreateProduct/>}/>
-          <Route path="/products" element={<UserView/>}/>
+          <Route path="/updateProduct/:id"   element={<UpdateProduct/>}/>
+          <Route path="/signup"  element={<Signup/>} />
+          <Route path="/signin"  element={<Signin/>} />
+          <Route path="/user" element={<UserView/>}/>
         </Routes>
       </Suspense>
       </BrowserRouter>

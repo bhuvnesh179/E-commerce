@@ -121,6 +121,7 @@ router.post("/addProduct",authMiddleware, async(req, res) => {
     try{
         const response = productSchema.safeParse(req.body);
         if(!response.success){
+            
             return res.status(400).json({
                 message: "Invalid Inputs"
             })
@@ -143,6 +144,7 @@ router.post("/addProduct",authMiddleware, async(req, res) => {
 router.put("/updateProduct/:id", authMiddleware, async(req, res) => {
     try{
         const response = productSchema.safeParse(req.body);
+        console.log(response);
         if(!response.success){
             return res.status(400).json({
                 message: "Invalid Inputs"
@@ -161,6 +163,7 @@ router.put("/updateProduct/:id", authMiddleware, async(req, res) => {
             product: product
         })
     }catch(error){
+        console.log(error);
         res.status(500).json({
             message: "Internal Server Error"
         })
