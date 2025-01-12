@@ -37,7 +37,7 @@ router.post("/signup", async (req, res) => {
     })
 
     if(user){
-        return res.json({
+        return res.status(409).json({
             message: "Email already taken"
         })
     }
@@ -49,12 +49,13 @@ router.post("/signup", async (req, res) => {
 
     const token = jwt.sign({userId: dbUser._id}, JWT_SECRET);
 
-    res.json({
+    res.status(201).json({
         message: "User created successfully",
         token: token
     })
 
     } catch(error){
+        console.log(error)
         res.status(500).json({
             message : "Internal Server Error"
         });
@@ -77,6 +78,13 @@ router.post("/signin", async (req, res) => {
         email: req.body.email
     });
 
+    const isPasswordCorrect = await bcrypt.compare(req.body.password, user.password);
+    if(!isPasswordCorrect){
+        return res.status(401).json({
+            message: "Invalid Credentials"
+        })
+    }
+
     if(user){
         const token = jwt.sign({userId: user._id}, JWT_SECRET);
         
@@ -90,6 +98,8 @@ router.post("/signin", async (req, res) => {
     })
 
     } catch(error){
+        console.log(error);
+        
         res.status(500).json({
             message : "Internal Server Error"
         });
@@ -100,8 +110,14 @@ router.post("/signin", async (req, res) => {
 router.get("/products",authMiddleware, async (req, res) => {
     try{
         const products = await Products.find();
+        if (!products) {
+            return res.status(404).json({
+                message: "No products found"
+            });
+        }
         res.json(products);
     } catch(error){
+        console.error("Error fetching products:", error);
         res.status(500).json({
             message : "Internal Server Error"
         });

@@ -2,7 +2,9 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 dotenv.config();
 
-mongoose.connect(process.env.MONGODB_URI).then(() => {
+
+mongoose.connect(process.env.MONGODB_URI)
+.then(() => {
     console.log("connected to db");
     
 })
@@ -16,6 +18,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
+        index: true 
     },
     password: {
         type: String,
@@ -36,6 +39,7 @@ const adminSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
+        index: true 
     },
     password: {
         type: String,
@@ -55,7 +59,8 @@ const productSchema = new mongoose.Schema({
     id: { 
         type: String, 
         unique: true, 
-        required: true 
+        required: true,
+        index: true,
     },
     name: {
         type: String,

@@ -46,7 +46,7 @@ router.post("/signup", async (req, res) => {
     })
 
     if(user){
-        return res.json({
+        return res.status(409).json({
             message: "Email already taken"
         })
     }
@@ -64,6 +64,8 @@ router.post("/signup", async (req, res) => {
     })
 
     } catch(error){
+        console.log(error);
+        
         res.status(500).json({
             message : "Internal Server Error"
         });
@@ -85,6 +87,12 @@ router.post("/signin", async (req, res) => {
     const user = await Admin.findOne({
         email: req.body.email
     });
+    const isPasswordCorrect = await bcrypt.compare(req.body.password, user.password);
+        if(!isPasswordCorrect){
+            return res.status(401).json({
+                message: "Invalid Credentials"
+            })
+        }
 
     if(user){
         const token = jwt.sign({userId: user._id}, JWT_SECRET);
@@ -99,6 +107,8 @@ router.post("/signin", async (req, res) => {
     })
 
     } catch(error){
+        console.log(error);
+        
         res.status(500).json({
             message : "Internal Server Error"
         });
@@ -132,13 +142,20 @@ router.post("/addProduct",authMiddleware, async(req, res) => {
 
 router.put("/updateProduct/:id", authMiddleware, async(req, res) => {
     try{
-        const response = productSchmea.safeParse(req.body);
+        const response = productSchema.safeParse(req.body);
         if(!response.success){
             return res.status(400).json({
                 message: "Invalid Inputs"
             })
         }
-        const product = await Products.findByIdAndUpdate(req.params.id, req.body, {new: true});
+        const product = await Products.findOneAndUpdate({ id: req.params.id }, req.body, { new: true });
+        
+        if(!product){
+            return res.status(404).json({
+                message: "Product not found"
+            })
+        }
+
         res.json({
             message: "Product updated successfully",
             product: product
@@ -152,7 +169,9 @@ router.put("/updateProduct/:id", authMiddleware, async(req, res) => {
 
 router.delete("/deleteProduct/:id", authMiddleware, async(req, res) => {
     try{
-        const product = await Products.findByIdAndDelete(req.params.id);
+        const product = await Products.findOneAndDelete({id: req.params.id});
+        console.log(product);
+        
         if(!product){
             return res.status(404).json({
                 message: "Product not found"
@@ -163,6 +182,7 @@ router.delete("/deleteProduct/:id", authMiddleware, async(req, res) => {
             product: product
         })
     }catch(error){
+        console.log(error);
         res.status(500).json({
             message: "Internal Server Error"
         })
