@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const {JWT_SECRET} = require("../config");
 const bcrypt = require("bcrypt");
 const authMiddleware = require("../middleware");
-
+const crypto = require('crypto');
 
 const router = express.Router();
 
@@ -120,6 +120,36 @@ router.get("/products",authMiddleware, async (req, res) => {
         console.error("Error fetching products:", error);
         res.status(500).json({
             message : "Internal Server Error"
+        });
+    }
+});
+
+router.post("/google-auth", async (req, res) => {
+    console.log(req.body);
+
+    try {
+        const { email, firstName, lastName} = req.body;
+        let user = await User.findOne({ email });
+        
+        if (!user) {
+            user = await User.create({
+                email,
+                firstName,
+                lastName,
+                password: crypto.randomBytes(16).toString('hex')
+            });
+        }
+
+        const token = jwt.sign({ userId: user._id }, JWT_SECRET);
+        res.json({
+            message: "Google auth successful",
+            token
+        });
+    } catch (error) {
+        console.log(error);
+        
+        res.status(500).json({
+            message: "Internal server error"
         });
     }
 });

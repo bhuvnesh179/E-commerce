@@ -3,6 +3,8 @@ import { useState } from "react";
 import axios from "axios";
 import { BACKEND_URL } from "../../config";
 import { Spinner } from "../components/Spinner";
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
+import  jwt_decode from 'jwt-decode';
 
 export const Signin = () => {
     const navigate = useNavigate();
@@ -24,6 +26,25 @@ export const Signin = () => {
         }
     }
 
+
+
+    const handleGoogleSuccess = async (credentialResponse) => {
+        try {
+            const decoded = jwt_decode(credentialResponse.credential);
+            
+            const response = await axios.post(`${BACKEND_URL}/api/v1/user/google-auth`, {
+                email: decoded.email,
+                firstName: decoded.given_name,
+                lastName: decoded.family_name,
+            }, { withCredentials: true });
+            
+            localStorage.setItem("token", response.data.token);
+            navigate("/user");
+        } catch (error) {
+            console.error("Google auth failed:", error);
+        }
+    };
+    
     return <div>
         
         <div className="grid grid-cols-1 md:grid-cols-2">
@@ -60,6 +81,21 @@ export const Signin = () => {
                 {loading ? <Spinner/> : "Login"}
                 </button>
            </div>
+
+           <div className="mt-4">
+            <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+                    <GoogleLogin
+                        onSuccess={handleGoogleSuccess}
+                        onError={() => console.log("Login Failed")}
+                        useOneTap
+                        size="large"
+                        theme="filled_blue"
+                        text="continue_with"
+                        shape="rectangular"
+                        width="300"
+                    />
+                </GoogleOAuthProvider>
+            </div>
 
         </div>
         <div className="flex flex-col items-center justify-center h-screen bg-gray-800 text-white font-extrabold text-2xl	">
