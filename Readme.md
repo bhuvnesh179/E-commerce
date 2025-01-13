@@ -18,14 +18,15 @@ https://e-commerce-79ve.onrender.com
 
 - Frontend:- React.js
 - Backend:- Nodejs with Express
-- Library:- Tailwind, Zod,          jsonwebtoken, axios, bcrypt, nodemon
+- Library:- Tailwind, Zod, jsonwebtoken, axios, bcrypt, nodemon, oauth
 - Database: MongoDB
 
-## Functionality Added
+## Features
+
 - Admin Login
-- User Signup/Signin
-- Admin can add product, update and delete.
-- User can see products and order(not added)  
+- User Signup/Signin via standard login or Google OAuth
+- Admin can add, update, and delete products
+- Users can view products and place orders (order functionality not yet added)
 
 
 ## Setting Up the Project Locally
