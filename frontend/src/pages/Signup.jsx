@@ -33,7 +33,7 @@ export const Signup = () => {
         try {
             const decoded = jwt_decode(credentialResponse.credential);
             
-            const response = await axios.post(`${BACKEND_URL}api/v1/user/google-auth`, {
+            const response = await axios.post(`${BACKEND_URL}/api/v1/user/google-auth`, {
                 email: decoded.email,
                 firstName: decoded.given_name,
                 lastName: decoded.family_name,
